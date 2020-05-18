@@ -8,6 +8,9 @@ module.exports = {
       measurement:
         description: "The measurement name for grouping the variables"
         type: "string"     
+      active:
+        description: "If enabled the data of this measurement will be streamed"
+        type: "string"     
       variables:
         description: "Variables to stream to database"
         type: "array"

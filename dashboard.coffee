@@ -59,9 +59,11 @@ module.exports = (env) ->
       @name = @config.name
       @measurement = @config.measurement
       @variables = @config.variables
+      @active = @config.active ? true
 
       @framework.variableManager.waitForInit()
       .then(() =>
+        unless @active then return
         for variable in @variables
           if _.size(variable.attributes) > 0
             env.logger.info "variable.attributes: " + JSON.stringify(variable.attributes,null,2)
@@ -73,7 +75,7 @@ module.exports = (env) ->
               if _variable.value? 
                 env.logger.debug variable.deviceId + " write " + attr.attributeId + " with "+ _variable.value
                 field = {}
-                field[attr.attributeId] = "" #_variable.value
+                field[attr.attributeId] = _variable.value
                 plugin.Connector.writeMeasurement(@measurement, {device: variable.deviceId}, field).then( (result) =>
                   env.logger.debug "ok"
                 ).catch( (err) =>
@@ -89,7 +91,7 @@ module.exports = (env) ->
                 if _variable?
                   env.logger.debug _device.id + " write " + attr.attributeId + " with "+ _variable.value
                   field = {}
-                  field[attr.attributeId] = "" #_variable.value
+                  field[attr.attributeId] = _variable.value
                   plugin.Connector.writeMeasurement(@measurement, {device: _device.id}, field).then( (result) =>
                     env.logger.debug "ok"
                   ).catch( (err) =>
@@ -98,7 +100,7 @@ module.exports = (env) ->
       )
 
       @eventHandler = (attrEvent) =>
-        unless plugin.ready then return
+        unless plugin.ready and @active then return
         # <device-id>.<attribute>
         _variable = _.find(@config.variables, (d)=> d.deviceId is attrEvent.device.id)
         if _variable?
