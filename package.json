@@ -11,7 +11,8 @@
     "influx-connector.coffee",
     "README.md",
     "LICENSE",
-    "dashboard-config-schema.coffee"
+    "dashboard-config-schema.coffee",
+    "device-config-schema.coffee"
   ],
   "version": "0.0.1",
   "homepage": "https://github.com/bertreb/pimatic-dashboard",
