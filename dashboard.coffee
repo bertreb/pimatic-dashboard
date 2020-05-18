@@ -46,7 +46,7 @@ module.exports = (env) ->
       @Connector = new InfluxConnection(@username, @password, @ip, @port, @database)
       @Connector.on "ready", =>
         @ready = true
-        #@emit "ready"
+        @emit "ready"
       @Connector.on "notready", =>
         @ready = false
 

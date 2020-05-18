@@ -3,6 +3,8 @@ module.exports = (env) ->
   Influx = require 'influx'
   events = require 'events'
   Promise = env.require 'bluebird'
+  _ = env.require 'lodash'
+  Flatted = require 'flatted'
 
   class InfluxConnection extends events.EventEmitter
 
@@ -27,12 +29,13 @@ module.exports = (env) ->
                 env.logger.debug "influxdb keep alive check ok"
                 @ready=true
               else
-                env.logger.debug "keep alive not responding"
+                env.logger.debug "host.online " + JSON.stringify(host.online,null,2)
+                #env.logger.debug "keep alive not responding " + Flatted.stringify(host.res,null,2)
             )
           ).catch( (err) =>
             env.logger.error err.message
           )
-      ,30000
+      ,60000
 
     connect: () =>
       env.logger.debug "reconnecting to influxdb"
@@ -42,7 +45,6 @@ module.exports = (env) ->
         database: @database
         host: @ip
         port: @port
-        protocol: "http"
       @influxcon = new Influx.InfluxDB(dbConfig)
       #@influxcon = new Influx.InfluxDB('http://'+@ip+":"+@port+'/'+@database, )
 
