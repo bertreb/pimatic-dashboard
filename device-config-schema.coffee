@@ -17,7 +17,19 @@ module.exports = {
           type: "object"
           properties:
             deviceId:
-              description: "Name for the corresponding attribute."
+              description: "DeviceId of the to be used attributes"
               type: "string"
+            attributes:
+              description: "Attributes to stream to database"
+              type: "array"
+              default: []
+              format: "table"
+              items:
+                type: "object"
+                properties:
+                  attributeId:
+                    description: "AttributeId of the to be used attributes"
+                    type: "string"
+
    }
 }

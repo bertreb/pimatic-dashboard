@@ -59,8 +59,11 @@ module.exports = (env) ->
 
       @eventHandler = (attrEvent) =>
         unless plugin.ready then return
+        # <device-id>.<attribute>
         _variable = _.find(@config.variables, (d)=> d.deviceId is attrEvent.device.id)
         if _variable?
+          if _.size(_variable.attributes) > 0
+            unless _.find(_variable.attributes, (a)=> attrEvent.attributeName is a.attributeId) then return
           env.logger.debug "measurement: " + @measurement + ", " + attrEvent.device.id + " write " + attrEvent.attributeName + " with "+ attrEvent.value
           field = {}
           field[attrEvent.attributeName] = attrEvent.value
