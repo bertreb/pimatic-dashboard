@@ -10,7 +10,7 @@ module.exports = {
         type: "string"     
       active:
         description: "If enabled the data of this measurement will be streamed"
-        type: "string"     
+        type: "boolean"     
       variables:
         description: "Variables to stream to database"
         type: "array"

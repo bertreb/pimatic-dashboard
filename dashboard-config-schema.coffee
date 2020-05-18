@@ -3,6 +3,10 @@ module.exports = {
   type: "object"
   required: []
   properties:
+    database:
+      description: "Database name used in influxdb"
+      type: "string"
+      required: true
     username:
       description: "Username for access influx api"
       type: "string"
@@ -10,7 +14,7 @@ module.exports = {
     password:
       description: "Password for access influx api"
       type: "string"
-      required: true     
+      required: true
     ip:
       description: "IP address from the influxdb rest api"
       type: "string"
