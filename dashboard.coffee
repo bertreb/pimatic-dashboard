@@ -72,7 +72,7 @@ module.exports = (env) ->
               env.logger.info "Attributes: " + _variableName
               _variable = @framework.variableManager.getVariableByName(_variableName)
               env.logger.info "_variable: " + _variable.value
-              if _variable.value? 
+              if _variable.value? and not Number.isNaN(Number _variable.value)
                 env.logger.debug variable.deviceId + " write " + attr.attributeId + " with "+ _variable.value
                 field = {}
                 field[attr.attributeId] = _variable.value
@@ -88,7 +88,7 @@ module.exports = (env) ->
                  _variableName = _device.id + "." + name
                 env.logger.info "Attributes: " + _variableName
                 _variable = @framework.variableManager.getVariableByName(_variableName)
-                if _variable?
+                if _variable? and not Number.isNaN(Number _variable.value)
                   env.logger.debug _device.id + " write " + attr.attributeId + " with "+ _variable.value
                   field = {}
                   field[attr.attributeId] = _variable.value
