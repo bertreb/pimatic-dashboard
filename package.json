@@ -1,0 +1,45 @@
+{
+  "name": "pimatic-dashboard",
+  "description": "Pimatic plugin presenting data via influxdb to grafana dashboard",
+  "author": {
+    "name": "Bert",
+    "email": "gitbertreb@gmail.com"
+  },
+  "main": "dashboard",
+  "files": [
+    "dashboard.coffee",
+    "influx-connector.coffee",
+    "README.md",
+    "LICENSE",
+    "dashboard-config-schema.coffee"
+  ],
+  "version": "0.0.1",
+  "homepage": "https://github.com/bertreb/pimatic-dashboard",
+  "configSchema": "dashboard-config-schema.coffee",
+  "dependencies": {
+    "influx": "5.4.0"
+  },
+  "keywords": [
+    "pimatic",
+    "influxdb",
+    "dashboard",
+    "grafana"
+  ],
+  "peerDependencies": {
+    "pimatic": ">=0.9.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
+  },
+  "bugs": {
+    "url": "https://github.com/bertreb/pimatic-dashboard/issues"
+  },
+  "maintainers": [
+    {
+      "name": "bertreb",
+      "email": "gitbertreb@gmail.com"
+    }
+  ]
+}
