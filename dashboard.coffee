@@ -2,6 +2,8 @@ module.exports = (env) ->
 
   Promise = env.require 'bluebird'
   _ = env.require 'lodash'
+  Flatted = require 'flatted'
+
 
   InfluxConnection = require('./influx-connector')(env)
 
@@ -12,7 +14,7 @@ module.exports = (env) ->
       @port = @config.port
       @username = @config.username
       @password = @config.password
-      @database = "pimatic"
+      @database = @config.database ? "pimatic"
 
       @ready=false
 
@@ -56,6 +58,44 @@ module.exports = (env) ->
       @id = @config.id
       @name = @config.name
       @measurement = @config.measurement
+      @variables = @config.variables
+
+      @framework.variableManager.waitForInit()
+      .then(() =>
+        for variable in @variables
+          if _.size(variable.attributes) > 0
+            env.logger.info "variable.attributes: " + JSON.stringify(variable.attributes,null,2)
+            for attr in variable.attributes
+               _variableName = variable.deviceId + "." + attr.attributeId
+              env.logger.info "Attributes: " + _variableName
+              _variable = @framework.variableManager.getVariableByName(_variableName)
+              env.logger.info "_variable: " + _variable.value
+              if _variable.value? 
+                env.logger.debug variable.deviceId + " write " + attr.attributeId + " with "+ _variable.value
+                field = {}
+                field[attr.attributeId] = "" #_variable.value
+                plugin.Connector.writeMeasurement(@measurement, {device: variable.deviceId}, field).then( (result) =>
+                  env.logger.debug "ok"
+                ).catch( (err) =>
+                  env.logger.error err.message
+                )
+          else
+            _device = @framework.deviceManager.getDeviceById(variable.deviceId)
+            if _device?
+              for name, _attr of _device.attributes
+                 _variableName = _device.id + "." + name
+                env.logger.info "Attributes: " + _variableName
+                _variable = @framework.variableManager.getVariableByName(_variableName)
+                if _variable?
+                  env.logger.debug _device.id + " write " + attr.attributeId + " with "+ _variable.value
+                  field = {}
+                  field[attr.attributeId] = "" #_variable.value
+                  plugin.Connector.writeMeasurement(@measurement, {device: _device.id}, field).then( (result) =>
+                    env.logger.debug "ok"
+                  ).catch( (err) =>
+                    env.logger.error err.message
+                  )
+      )
 
       @eventHandler = (attrEvent) =>
         unless plugin.ready then return
