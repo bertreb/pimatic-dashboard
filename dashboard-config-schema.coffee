@@ -6,7 +6,7 @@ module.exports = {
     database:
       description: "Database name used in influxdb"
       type: "string"
-      required: true
+      default: "pimatic"
     username:
       description: "Username for access influx api"
       type: "string"
@@ -16,11 +16,11 @@ module.exports = {
       type: "string"
       required: true
     ip:
-      description: "IP address from the influxdb rest api"
+      description: "IP address of the influxdb rest api"
       type: "string"
       required: true
     port:
-      description: "port from the influxdb rest api"
+      description: "Port of the influxdb rest api"
       type: "string"
       default: "8086"
     debug:

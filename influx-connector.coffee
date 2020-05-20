@@ -33,7 +33,7 @@ module.exports = (env) ->
                 #env.logger.debug "keep alive not responding " + Flatted.stringify(host.res,null,2)
             )
           ).catch( (err) =>
-            env.logger.error err.message
+            env.logger.debug "Error handled: " + err.message
           )
       ,60000
 
@@ -51,11 +51,11 @@ module.exports = (env) ->
       @influxcon.getDatabaseNames().then( (dbs) =>
         if (!dbs.includes(@database))
           env.logger.debug "pimatic database not found"
-          env.logger.debug "creating new pimatic database"
+          env.logger.debug "creating new '#{@database}'' database"
           @influxcon.createDatabase(@database)
         @ready=true
         @emit 'ready'
-        env.logger.debug "pimatic database ok"
+        env.logger.debug @database + " database ok"
       ).catch( (err) =>
         env.logger.error "could not connect to influxdb: " + JSON.stringify(err.message,null,2)
       )

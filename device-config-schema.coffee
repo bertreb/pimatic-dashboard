@@ -10,7 +10,8 @@ module.exports = {
         type: "string"     
       active:
         description: "If enabled the data of this measurement will be streamed"
-        type: "boolean"     
+        type: "boolean"
+        default: true    
       variables:
         description: "Variables to stream to database"
         type: "array"
@@ -33,6 +34,9 @@ module.exports = {
                   attributeId:
                     description: "AttributeId of the to be used attributes"
                     type: "string"
-
+                  tag:
+                    description: "Extra tag for queries"
+                    type: "string"
+                    required: false
    }
 }
