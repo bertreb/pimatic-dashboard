@@ -4,7 +4,7 @@ module.exports = (env) ->
   events = require 'events'
   Promise = env.require 'bluebird'
   _ = env.require 'lodash'
-  Flatted = require 'flatted'
+  #Flatted = require 'flatted'
 
   class InfluxConnection extends events.EventEmitter
 
