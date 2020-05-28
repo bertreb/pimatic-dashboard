@@ -50,7 +50,7 @@ module.exports = (env) ->
       @Connector.on "notready", =>
         @ready = false
 
-  class DashboardMeasurement extends env.devices.Device
+  class DashboardMeasurement extends env.devices.PresenceSensor
 
     constructor: (@config, lastState, @framework, plugin) ->
       @id = @config.id
@@ -63,6 +63,7 @@ module.exports = (env) ->
       @active = @config.active ? true
       @devMgr = @framework.deviceManager
       @varMgr = @framework.variableManager
+      if @active then @_setPresence(on) else @_setPresence(off)
 
       ###
       @varMgr.waitForInit()
@@ -115,7 +116,10 @@ module.exports = (env) ->
       ###
 
       @eventHandler = (attrEvent) =>
-        unless plugin.ready and @active then return
+        unless plugin.ready and @active 
+          @_setPresence(off)
+          return
+        @_setPresence(on) unless @_presence
         # <device-id>.<attribute>
         _variable = _.find(@variables, (v)=> v.deviceId.indexOf(attrEvent.device.id)>=0)
         _numberedValue = Number attrEvent.value
