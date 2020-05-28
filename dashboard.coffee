@@ -2,8 +2,7 @@ module.exports = (env) ->
 
   Promise = env.require 'bluebird'
   _ = env.require 'lodash'
-  Flatted = require 'flatted'
-
+  
 
   InfluxConnection = require('./influx-connector')(env)
 
