@@ -18,7 +18,6 @@
   "homepage": "https://github.com/bertreb/pimatic-dashboard",
   "configSchema": "dashboard-config-schema.coffee",
   "dependencies": {
-    "flatted": "^2.0.2",
     "influx": "5.4.0"
   },
   "keywords": [
