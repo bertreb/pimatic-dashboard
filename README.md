@@ -16,7 +16,7 @@ Several instructions for installing Influxdb on your machine can be found on the
 The following Influxdb information is important for the connection and is used in the Pimatic dashboard plugin config.
 
 ```
- 	database: Database name used in influxdb. If absent, the database is automatically created (default: pimatic)
+  database: Database name used in influxdb. If absent, the database is automatically created (default: pimatic)
   username: Username for access influx api
   password: Password for access influx api
   ip: The IP address of the influxdb rest api
@@ -42,11 +42,11 @@ After the device is created and pimatic devices/attributes are added, the fields
   active: If enabled the data of this measurement will be streamed (default: true)
   variables: Variables to be streamed to Influx database (name from plugin config)
     [ 
-    	deviceId: Pimatic deviceId of the to be used attributes
+      deviceId: Pimatic deviceId of the to be used attributes
       attributes: Attributes to stream to database
-      	[
-      		attributeId: AttributeId of the to be used attributes
-      		tag: Extra tag for Grafana queries
-      	]
+        [
+          attributeId: AttributeId of the to be used attributes
+          tag: Extra tag for Grafana queries
+        ]
     ]
 ```
